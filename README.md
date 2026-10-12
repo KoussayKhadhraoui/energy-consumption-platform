@@ -1,147 +1,131 @@
-# ⚡ Energy Consumption Prediction Platform
-
-A Machine Learning project that analyzes household electricity consumption and predicts the next hour's average active power using historical consumption data.
-
-## 📌 Project Overview
-
-This project uses the **Individual Household Electric Power Consumption** dataset to explore electricity usage patterns, engineer time-series features, train a regression model, and visualize results through an interactive Streamlit dashboard.
-
-The objective is to demonstrate a complete Data Science workflow, from data preprocessing to model evaluation and interactive prediction.
-
-## ✨ Features
-
-- **Data preprocessing:** Clean and prepare household electricity consumption data.
-- **Exploratory Data Analysis:** Analyze consumption patterns and trends.
-- **Feature engineering:** Create time-based features, lag features, and rolling averages.
-- **Machine Learning:** Train a Random Forest Regressor.
-- **Model evaluation:** Evaluate predictions using MAE, RMSE, and R².
-- **Interactive dashboard:** Explore consumption data and model predictions with Streamlit.
-
-## 🛠️ Tech Stack
-
-- Python
-- Pandas and NumPy
-- Scikit-learn
-- Streamlit
-- Matplotlib
-
 ## 📊 Dataset
 
-The project uses the UCI Machine Learning Repository's **Individual Household Electric Power Consumption** dataset.
+This project uses the **Individual Household Electric Power Consumption** dataset from the UCI Machine Learning Repository.
 
-Dataset source: https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption
+**Official dataset:** https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption
 
-The original dataset contains approximately 2 million measurements collected from a household over several years.
+The dataset contains household electricity measurements collected over several years. The project processes these measurements into hourly observations to analyze consumption patterns and predict the next hour's average active power.
 
-The data is aggregated into hourly observations before feature engineering and model training.
+### Download and Prepare the Dataset
 
-**Note:** The raw dataset is not included in this repository. Download it from the official source and place the required text file at:
+Follow these steps before running the application.
 
-`data/raw/household_power_consumption.txt`
+**Step 1: Download the dataset**
 
-## 🤖 Machine Learning Model
+1. Open the [official UCI dataset page](https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption).
+2. Download the dataset archive.
+3. Extract the downloaded ZIP file.
+4. Locate the file named `household_power_consumption.txt`.
 
-A `RandomForestRegressor` is used to predict the next hour's average active power.
+**Step 2: Create the required folders**
 
-The model uses historical consumption information, time-based variables, lag features, and rolling averages.
+From the project root directory, create the folders if they do not already exist:
 
-### Model Performance
+```powershell
+New-Item -ItemType Directory -Force data\raw
+```
 
-Evaluation results on the chronological test set:
+**Step 3: Place the dataset**
 
-| Metric | Result |
-|---|---:|
-| MAE | 0.3271 kW |
-| RMSE | 0.4746 kW |
-| R² Score | 0.5753 |
-
-**Interpretation:** The model achieves an MAE of approximately 0.33 kW. The R² score indicates that the model captures part of the variation in electricity consumption, while further improvements remain possible.
-
-These metrics describe performance on the current test split and are not a guarantee of future prediction accuracy.
-
-## 📁 Project Structure
+Copy `household_power_consumption.txt` into:
 
 ```text
 energy-consumption-platform/
-├── app.py
-├── requirements.txt
-├── data/
-│   ├── raw/
-│   └── processed/
-├── models/
-│   └── energy_model.pkl
-├── src/
-│   ├── analysis/
-│   ├── data/
-│   ├── models/
-│   └── visualization/
-└── tests/
-    ├── eda_test.py
-    ├── evaluation_test.py
-    ├── feature_test.py
-    ├── ml_test.py
-    ├── prediction_test.py
-    └── test_preprocessing.py
+└── data/
+    └── raw/
+        └── household_power_consumption.txt
 ```
+
+Make sure the filename and folder structure match exactly.
+
+**Important:** The raw dataset is excluded from GitHub to avoid uploading large data files. Each user must download and prepare the dataset locally before running the application.
 
 ## 🚀 Installation and Usage
 
 ### 1. Clone the repository
 
-```bash
+Make sure Git and Git LFS are installed, then run:
+
+```powershell
+git lfs install
 git clone https://github.com/KoussayKhadhraoui/energy-consumption-platform.git
 cd energy-consumption-platform
 ```
 
-### 2. Create a virtual environment
+Git LFS is required to download the saved model file tracked with Git LFS.
 
-On Windows PowerShell:
+### 2. Create a virtual environment
 
 ```powershell
 python -m venv venv
+```
+
+Activate it in Windows PowerShell:
+
+```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
+If PowerShell blocks script execution, you can use the virtual environment's Python directly without activating it.
+
 ### 3. Install dependencies
 
-```bash
+```powershell
 python -m pip install -r requirements.txt
+```
+
+If you did not activate the virtual environment, run:
+
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
 ### 4. Prepare the dataset
 
-Download the dataset from the official UCI source and place the required file in `data/raw/`.
+Complete the steps in the **Download and Prepare the Dataset** section above.
 
-### 5. Run the dashboard
+Verify that the following file exists:
 
-```bash
+```text
+data/raw/household_power_consumption.txt
+```
+
+### 5. Launch the Streamlit dashboard
+
+With the virtual environment activated:
+
+```powershell
 python -m streamlit run app.py
 ```
 
-### 6. Train the model
+Without activating the environment:
 
-After preparing the dataset, run:
+```powershell
+.\venv\Scripts\python.exe -m streamlit run app.py
+```
 
-```bash
+Streamlit will display a local URL in the terminal. Open that URL in your browser to use the dashboard.
+
+### 6. Train the Machine Learning model
+
+If you want to retrain the model using the prepared dataset, run:
+
+```powershell
 python -m tests.ml_test
 ```
 
-## 🔮 Future Improvements
+If the virtual environment is not activated:
 
-- Compare additional regression algorithms.
-- Improve feature engineering and time-series validation.
-- Add prediction uncertainty estimates.
-- Optimize model performance.
-- Deploy the dashboard online.
+```powershell
+.\venv\Scripts\python.exe -m tests.ml_test
+```
 
-## 👨‍💻 Author
+Training requires the dataset to be available locally. It may replace the saved model, so keep a backup if you want to preserve the existing version.
 
-**Koussay Khadhraoui**
+## 🛠️ Troubleshooting
 
-Computer Science Student — Data Engineering and Decision Support Systems
+- **Dataset file not found:** Check that `household_power_consumption.txt` is inside `data/raw/`.
+- **Module not found:** Make sure you installed the dependencies in the same Python environment used to launch Streamlit.
+- **PowerShell activation blocked:** Use `.\venv\Scripts\python.exe` to run Python commands without activating the environment.
+- **Model loading error:** Make sure Git LFS downloaded the actual model file rather than leaving an LFS pointer in its place.
 
-GitHub: https://github.com/KoussayKhadhraoui
-
----
-
-*This project was developed as a practical application of data analysis, feature engineering, and Machine Learning.*
