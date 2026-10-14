@@ -128,4 +128,17 @@ Training requires the dataset to be available locally. It may replace the saved 
 - **Module not found:** Make sure you installed the dependencies in the same Python environment used to launch Streamlit.
 - **PowerShell activation blocked:** Use `.\venv\Scripts\python.exe` to run Python commands without activating the environment.
 - **Model loading error:** Make sure Git LFS downloaded the actual model file rather than leaving an LFS pointer in its place.
+## 📸 Dashboard Screenshots
+
+### Overview
+![Overview Dashboard](screenshots/overview.png)
+
+### Data Analysis
+![Data Analysis](screenshots/analysis.png)
+
+### Energy Prediction
+![Energy Prediction](screenshots/prediction.png)
+
+### Model Performance
+![Model Performance](screenshots/model.png)
 
